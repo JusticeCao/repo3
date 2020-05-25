@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生详情</title>
+    <script src="../static/js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        $(function(){
+            var tbody = document.getElementById("tbody");
+            $.ajax({
+                type:"get",
+                url:'/day29/bank/list',
+                contentType:"application/json;charset=utf-8",
+                data:{},
+                success:function (data) {
+                    //清空数据
+                    /*$("#tbody").html('');*/
+                    //追加数据
+                    $.each(data, function (i, data) {
+                        //一个dom就是一个新闻对象
+                        $("#tbody").append("<tr>"+
+                            "<td>"+data.cardId+"</td>"+
+                            "<td>"+data.cardName+"</td>"+
+                            "<td>"+data.cardType+"</td>"+
+                            "<td>"+data.cardBindTelNo+"</td>"+
+                            "<td><input type='button' id='updBtn' value='修改' οnclick= 'upd("+data.cardId+")'/>" +"&nbsp&nbsp&nbsp&nbsp"+
+                            "<input type='button' id='delBtn' value='删除' οnclick='del("+data.cardId+")'/></td>"+
+                            "</tr>");
+                    });
+                },
+                error:function () {
+                    window.alert("查询失败");
+                }
+            });
+        });
+
+        function select() {
+            var cardId = document.getElementById("selected");
+            $.ajax({
+                type:"get",
+                url:'/day29/bank/selectByPrimaryKey'+cardId,
+                contentType:"application/json;charset=utf-8",
+                success:function (data) {
+                    $("#tbody").html('');
+                        $("#tbody").append("<tr>"+
+                            "<td>"+data.cardId+"</td>"+
+                            "<td>"+data.cardName+"</td>"+
+                            "<td>"+data.cardType+"</td>"+
+                            "<td>"+data.cardBindTelNo+"</td>"+
+                            "<td><input type='button' id='updBtn' value='修改' οnclick= 'upd("+data.cardId+")'/>" +"&nbsp&nbsp&nbsp&nbsp"+
+                            "<input type='button' id='delBtn' value='删除' οnclick='del("+data.cardId+")'/></td>"+
+                            "</tr>");
+                },
+                error:function () {
+                    window.alert("查询失败");
+                }
+            });
+        }
+
+        function del(cardId){
+            $.ajax({
+                type:"delete",
+                url : "/day29/bank/2"+cardId,
+                dataType:JSON,
+                async:false,
+                success:function(data){
+                    alert("删除成功");
+                },
+                error:function (data) {
+                    alert("删除失败");
+                }
+            });
+        }
+
+        function upd(cardId) {
+            var notitle=$("input[name='notitle']").val();
+            var text=$("input[name='text']").val();
+            $.ajax({
+                url:'/day29/bank/update/'+cardId,
+                type:"put",
+                async:false,
+                data:{},
+                success:function(data){
+                    $("#notitle").val(notitle);
+                    $("#text").val(text);
+                },
+                error:function (data) {
+                    alert("修改失败");
+                }
+            });
+        }
+
+        function add () {
+            var cardId=$('#cardId').val();
+            var cardName=$('#cardName').val();
+            var cardType=$('#cardType').val();
+            var cardBindTelNo=$('#cardBindTelNo').val();
+            $.ajax({
+                url:'/day29/bank/save',
+                type:"post",
+                dataType:JSON,
+                data:{"cardId":cardId,"cardName":cardName,"cardType":cardType,"cardBindTelNo":cardBindTelNo},
+                success:function(data){
+                    window.alert("添加成功");
+                },
+                error:function () {
+                    window.alert("添加失败");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="selected"/>
+<input type="button" value="查找" onclick="select()"/><br/>
+<input type="text" id="cardId" placeholder="银行卡编号"/><br/>
+<input type="text" id="cardName" placeholder="开户银行名称"/><br/>
+<input type="text" id="cardType" placeholder="银行卡类型"/><br/>
+<input type="text" id="cardBindTelNo" placeholder="银行卡绑定电话"/>
+<input type="button" value="添加" onclick="add ()"/><br/>
+    <table border="1" cellspacing="0" align="center">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>开户银行</th>
+            <th>银行卡类型</th>
+            <th>银行卡绑定电话</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</body>
+</html>
