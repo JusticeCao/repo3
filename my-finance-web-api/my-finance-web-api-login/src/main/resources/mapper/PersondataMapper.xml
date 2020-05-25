@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.cz.web.api.login.dao.PersondataMapper">
+  <resultMap id="BaseResultMap" type="com.qf.zsm.domain.PersonData">
+    <!--@mbg.generated-->
+    <id column="person_id" jdbcType="INTEGER" property="personId" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="academic" jdbcType="VARCHAR" property="academic" />
+    <result column="graduate_school" jdbcType="VARCHAR" property="graduateSchool" />
+    <result column="marital_status" jdbcType="VARCHAR" property="maritalStatus" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    person_id, qq, city, academic, graduate_school, marital_status, industry, salary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from persondata
+    where person_id = #{personId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from persondata
+    where person_id = #{personId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="person_id" keyProperty="personId" parameterType="com.qf.zsm.domain.PersonData" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into persondata (qq, city, academic, 
+      graduate_school, marital_status, industry, 
+      salary)
+    values (#{qq,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{academic,jdbcType=VARCHAR}, 
+      #{graduateSchool,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="person_id" keyProperty="personId" parameterType="com.qf.zsm.domain.PersonData" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into persondata
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="academic != null">
+        academic,
+      </if>
+      <if test="graduateSchool != null">
+        graduate_school,
+      </if>
+      <if test="maritalStatus != null">
+        marital_status,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="academic != null">
+        #{academic,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null">
+        #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.zsm.domain.PersonData">
+    <!--@mbg.generated-->
+    update persondata
+    <set>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="academic != null">
+        academic = #{academic,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null">
+        graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where person_id = #{personId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.zsm.domain.PersonData">
+    <!--@mbg.generated-->
+    update persondata
+    set qq = #{qq,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      academic = #{academic,jdbcType=VARCHAR},
+      graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+      marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=VARCHAR}
+    where person_id = #{personId,jdbcType=INTEGER}
+  </update>
+</mapper>
